@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wall Clock Without Numbers</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #282c34;
+    }
+
+    .clock {
+      position: relative;
+      width: 500px; /* Size of the clock */
+      height: 500px;
+      border-radius: 50%;
+      background-color: #fff;
+      border: 10px solid #333;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .clock .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: 100%;
+      transform: translateX(-50%);
+      transition-timing-function: steps(1);
+      transition: all 0.5s ease-in-out;
+    }
+
+    .clock .hour {
+      width: 10px; /* Hour hand width */
+      height: 120px; /* Hour hand length */
+      background-color: #333;
+      transform-origin: 50% 100%;
+    }
+
+    .clock .minute {
+      width: 6px; /* Minute hand width */
+      height: 160px; /* Minute hand length */
+      background-color: #555;
+      transform-origin: 50% 100%;
+    }
+
+    .clock .second {
+      width: 4px; /* Second hand width */
+      height: 180px; /* Second hand length */
+      background-color: #f00;
+      transform-origin: 50% 100%;
+      transition: transform 0.1s linear;
+    }
+
+    .clock .center {
+      position: absolute;
+      width: 20px; /* Larger center dot */
+      height: 20px;
+      background-color: #333;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+  <div class="clock" id="clock">
+    <div class="hand hour" id="hour-hand"></div>
+    <div class="hand minute" id="minute-hand"></div>
+    <div class="hand second" id="second-hand"></div>
+    <div class="center"></div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const hour = now.getHours();
+      const minute = now.getMinutes();
+      const second = now.getSeconds();
+
+      // Calculate rotation degrees for the hour, minute, and second hands
+      const hourDeg = (hour % 12) * 30 + (minute / 60) * 30;
+      const minuteDeg = minute * 6;
+      const secondDeg = second * 6;
+
+      // Update the hand rotations
+      document.getElementById('hour-hand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+      document.getElementById('minute-hand').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+      document.getElementById('second-hand').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+    }
+
+    // Call the functions
+    setInterval(updateClock, 1000);
+    updateClock(); // Initial call to set time immediately
+  </script>
+</body>
+</html>
